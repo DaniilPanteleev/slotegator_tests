@@ -1,0 +1,59 @@
+plugins {
+    id "java"
+    id "io.qameta.allure" version "$allurePluginVersion"
+    id "io.freefair.lombok" version "$lombokVersion"
+}
+
+allure {
+    version = "$allureVersion"
+}
+
+repositories {
+    mavenCentral()
+}
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of("$projectJavaVersion"))
+    }
+}
+
+dependencies {
+    //api
+    implementation("io.rest-assured:rest-assured:$restAssuredVersion") {
+        exclude group: 'rg.apache.groovy', module: 'groovy'
+        exclude group: 'rg.apache.groovy', module: 'groovy-xml'
+    }
+    implementation "io.rest-assured:json-schema-validator:$restAssuredVersion"
+    implementation("io.qameta.allure:allure-rest-assured:$allureVersion")
+
+    //jackson
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonDataTypeVersion")
+    implementation("org.openapitools:jackson-databind-nullable:$jacksonDataBindVersion")
+
+    //ui
+
+    //common
+
+    //test
+    implementation "org.assertj:assertj-core:$assertJVersion"
+    implementation 'org.projectlombok:lombok:1.18.20'
+    testImplementation "org.junit.jupiter:junit-jupiter:$junitJupiterVersion"
+    implementation "org.junit.jupiter:junit-jupiter-api:$junitJupiterVersion"
+    testImplementation "io.qameta.allure:allure-junit5:$allureVersion"
+    testImplementation "io.qameta.allure:allure-junit-platform:$allureVersion"
+    implementation "org.awaitility:awaitility:$awaitilityVersion"
+    implementation "com.github.javafaker:javafaker:$fakerVersion"
+
+    //Logging
+    implementation "org.apache.logging.log4j:log4j-core:$log4jVersion"
+    implementation "org.apache.logging.log4j:log4j-api:$log4jVersion"
+    implementation "org.apache.logging.log4j:log4j-iostreams:$log4jVersion"
+    implementation "org.apache.logging.log4j:log4j-1.2-api:$log4jVersion"
+    implementation "org.apache.logging.log4j:log4j-slf4j-impl:$log4jVersion"
+}
+
+test {
+    useJUnitPlatform()
+}
+
